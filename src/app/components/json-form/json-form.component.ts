@@ -54,7 +54,7 @@ export class JsonFormComponent implements OnChanges {
   constructor(private fb: FormBuilder) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes.jsonFormData.firstChange) {
+    if (!changes.jsonFormData.currentValue) {
       this.createForm(this.jsonFormData.controls);
     }
   }

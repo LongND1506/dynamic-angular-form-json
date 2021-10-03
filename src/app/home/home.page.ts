@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 import { JsonFormData } from '../components/json-form/json-form.component';
 
 @Component({
@@ -9,14 +9,22 @@ import { JsonFormData } from '../components/json-form/json-form.component';
 })
 export class HomePage implements OnInit {
   public formData: JsonFormData;
+  validJsonResponse: JsonFormData;
+  formatJsonError: string;
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.http
-      .get('/assets/my-form.json')
-      .subscribe((formData: JsonFormData) => {
-        this.formData = formData;
-      });
+  ngOnInit() {}
+
+  handleInputJson(event: any) {
+    try {
+      const json = JSON.parse(event.target.value);
+
+      this.formatJsonError = '';
+      this.validJsonResponse = json;
+    } catch (error) {
+      this.validJsonResponse = null;
+      this.formatJsonError = 'invalid json';
+    }
   }
 }
