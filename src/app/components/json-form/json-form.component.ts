@@ -1,11 +1,5 @@
-import {
-  Component,
-  OnChanges,
-  Input,
-  ChangeDetectionStrategy,
-  SimpleChanges,
-} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 interface JsonFormValidators {
   min?: number;
@@ -46,18 +40,24 @@ export interface JsonFormData {
   templateUrl: './json-form.component.html',
   styleUrls: ['./json-form.component.scss'],
 })
-export class JsonFormComponent implements OnChanges {
-  @Input() jsonFormData: JsonFormData;
+export class JsonFormComponent {
+  private _jsonFormData: JsonFormData;
 
+  @Input() set jsonFormData(value: JsonFormData) {
+    // eslint-disable-next-line no-underscore-dangle
+    this._jsonFormData = value;
+    this.createForm(value.controls);
+  }
+
+  get jsonFormData() {
+    // eslint-disable-next-line no-underscore-dangle
+    return this._jsonFormData;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   public myForm: FormGroup = this.fb.group({});
 
   constructor(private fb: FormBuilder) {}
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (!changes.jsonFormData.currentValue) {
-      this.createForm(this.jsonFormData.controls);
-    }
-  }
 
   createForm(controls: JsonFormControls[]) {
     for (const control of controls) {

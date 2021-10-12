@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { IonicModule } from '@ionic/angular';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HomePage } from './home.page';
-
-import { HomePageRoutingModule } from './home-routing.module';
+import { IonicModule } from '@ionic/angular';
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 import { JsonFormComponent } from '../components/json-form/json-form.component';
+import { HomePageRoutingModule } from './home-routing.module';
+import { HomePage } from './home.page';
 
 @NgModule({
   imports: [
@@ -15,6 +15,7 @@ import { JsonFormComponent } from '../components/json-form/json-form.component';
     IonicModule,
     HomePageRoutingModule,
     HttpClientModule,
+    NgxJsonViewerModule,
   ],
   declarations: [HomePage, JsonFormComponent],
 })

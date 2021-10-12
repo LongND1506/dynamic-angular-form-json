@@ -5,25 +5,29 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item class="ion-margin">
-    <ion-textarea
-      color="primary"
-      placeholder="Enter json here..."
-      debounce="300"
-      (ionChange)="handleInputJson($event)"
-    ></ion-textarea>
-   
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <div
+          class="app-ace-editor"
+          #editor
+          style="width: '100%'; height: '500px'"
+        ></div>
+      </ion-col>
+      <ion-col size="6">
+        <ngx-json-viewer
+          [json]="validJsonResponse"
+          [expanded]="false"
+        ></ngx-json-viewer>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-item class="ion-margin" *ngIf="formatJsonError">
+    <ion-title size="small"> {{ formatJsonError }}</ion-title>
   </ion-item>
 
-  <ion-item  class="ion-margin" *ngIf="validJsonResponse">
-    <ion-title size="small"> {{  validJsonResponse | json}}</ion-title>
-  </ion-item>
-
-  <ion-item  class="ion-margin" *ngIf="formatJsonError">
-    <ion-title size="small"> {{  formatJsonError }}</ion-title>
-  </ion-item>
-
-  <ion-card *ngIf="formatJsonError=== ''">
+  <ion-card *ngIf="formatJsonError === ''">
     <ion-card-content>
       <app-json-form [jsonFormData]="validJsonResponse"></app-json-form>
     </ion-card-content>
