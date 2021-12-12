@@ -1,9 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title> Dynamic JSON Form </ion-title>
+    <ion-title> Demo Subject and Rx Operator </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <app-json-form [jsonFormData]="formData"></app-json-form>
+  <ion-label>Start typing city to search country: </ion-label>
+  <ion-input
+    type="text"
+    (ionInput)="onSearch($event)"
+    placeholder="Type here"
+  ></ion-input>
+
+  <p *ngIf="(result$ | async)">{{ result$ | async | json }}</p>
+
+  <p *ngIf="(result$ | async) === null">
+    {{ (result$ | async) === null ? 'No result' : ''}}
+  </p>
+
+  <ion-button
+    size="small"
+    color="primary"
+    (click)="showHistorySearch()"
+    *ngIf="((listKeywordHistory$ | async)?.length)"
+  >
+    Click to show/hide search history
+  </ion-button>
+
+
+  <ng-container *ngIf="ishowHistory">
+    <ion-item *ngFor="let item of (listKeywordHistory$ | async)">
+      {{ item }}
+    </ion-item>
+  </ng-container>
 </ion-content>
